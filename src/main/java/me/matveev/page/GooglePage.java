@@ -1,4 +1,4 @@
 package me.matveev.page;
 
-public class WikiPage {
+public class GooglePage {
 }

@@ -1,5 +1,8 @@
 package me.matveev.page;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,15 +15,21 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertNotEquals;
 
-public class WikiPageTest {
-    @Test
-    public void test() {
-        System.setProperty("webdriver.gecko.driver", "geckodriver");
+public class GooglePageTest {
+    private final String url = "https://www.google.com";
+    private WebDriver driver;
 
+    @BeforeClass
+    public static void initProperties() {
+        System.setProperty("webdriver.gecko.driver", "geckodriver");
+    }
+
+    @Before
+    public void initWebDriver() {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setCapability("marionette", true);
 
-        WebDriver driver = new FirefoxDriver(capabilities);
+        driver = new FirefoxDriver(capabilities);
         driver.manage()
                 .window()
                 .maximize();
@@ -28,11 +37,12 @@ public class WikiPageTest {
                 .timeouts()
                 .implicitlyWait(3, TimeUnit.SECONDS);
 
+        driver.navigate().to(url);
+    }
+
+    @Test
+    public void test() {
         try {
-            String url = "https://www.google.com";
-
-            driver.navigate().to(url);
-
             WebElement searchInputElement = driver.findElement(By.cssSelector("input[name='q']"));
             searchInputElement.sendKeys("hello selenium");
 
@@ -45,8 +55,11 @@ public class WikiPageTest {
 
         } catch (WebDriverException e) {
             e.printStackTrace();
-        } finally {
-            driver.quit();
         }
+    }
+
+    @After
+    public void closeDriver() {
+        driver.quit();
     }
 }
