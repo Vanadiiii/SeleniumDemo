@@ -6,7 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -42,20 +41,15 @@ public class GooglePageTest {
 
     @Test
     public void test() {
-        try {
-            WebElement searchInputElement = driver.findElement(By.cssSelector("input[name='q']"));
-            searchInputElement.sendKeys("hello selenium");
+        WebElement searchInputElement = driver.findElement(By.cssSelector("input[name='q']"));
+        searchInputElement.sendKeys("hello selenium");
 
-            WebElement searchButton = driver.findElements(By.name("btnK")).get(1);
-            searchButton.click();
+        WebElement searchButton = driver.findElements(By.name("btnK")).get(1);
+        searchButton.click();
 
-            String currentUrl = driver.getCurrentUrl();
+        String currentUrl = driver.getCurrentUrl();
 
-            assertNotEquals(url, currentUrl);
-
-        } catch (WebDriverException e) {
-            e.printStackTrace();
-        }
+        assertNotEquals(url, currentUrl);
     }
 
     @After
