@@ -16,6 +16,11 @@ public class SearchResult {
                 .text()
                 .replaceAll("^(.+?) .+$", "$1");
         this.header = container.$("a h3").text();
-        this.partialText = container.$$x("div/div/div").get(1).text();
+        this.partialText = container.$("a")
+                .parent()
+                .parent()
+                .$$x("div")
+                .get(1)
+                .text();
     }
 }
